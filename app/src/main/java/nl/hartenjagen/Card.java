@@ -5,6 +5,7 @@ public class Card {
     public Suit suit;
     public int value;
     public int points;
+    public Player playedBy;
 
     public enum Suit {
         HEARTS, DIAMONDS, SPADES, CLUBS
@@ -23,6 +24,10 @@ public class Card {
 
     public int getPoints() {
         return this.points;
+    }
+
+    public Suit getSuit() {
+        return this.suit;
     }
 
     public String determineName(Suit suit, int value) {
