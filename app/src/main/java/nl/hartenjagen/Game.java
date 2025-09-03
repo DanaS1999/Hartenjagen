@@ -62,18 +62,19 @@ public class Game {
     public Result checkIfValid(Card card, Player p) {
         if (!p.hasTurn()) {
             return new Result(false, "Player does not have turn");
-        } else if (!p.inHand(card)) {
+        } else if (!p.hasCardInHand(card)) {
             return new Result(false, "Player does not have this card");
-        } else if (!followsSuit(card, p)) {
+        } else if (!playerFollowsSuit(card, p)) {
             return new Result(false, "Player must play a card of the same suit as the first card");
-        } else if (card.getPoints() > 0 && !pointsWerePlayed) {
+        }
+         else if (card.getPoints() > 0 && !pointsWerePlayed) {
             return new Result(false, "Player cannot play a card with points yet");
         } else {
             return new Result(true);
         }
     }
 
-    public boolean followsSuit(Card card, Player player) {
+    public boolean playerFollowsSuit(Card card, Player player) {
         if (table.size() == 0) {
             return true;
         } else {
@@ -87,15 +88,55 @@ public class Game {
         }
     }
 
+    public boolean cardFollowsSuit(Card card) {
+       if (table.size() == 0) {
+            return true;
+        } else {
+            Card firstCard = table.get(0);
+            Card.Suit firstSuit = card.getSuit();
+            if (firstCard.getSuit() == card.getSuit()) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
     public boolean roundCompleted() {
         return table.size() == 4;
     }
     
     public void endOfRound() {
-
+        int totalPointsInRound = 0;
+        Card highestCardInRound = table.get(0);
+        for (Card c : table) {
+            totalPointsInRound += c.getPoints();
+            if (cardFollowsSuit(c) && (c.getValue() > highestCardInRound.getValue())) {
+                highestCardInRound = c;
+            }
+        }
+        Player roundWinner = highestCardInRound.playedBy;
+        roundWinner.increaseScore(totalPointsInRound);
+        //return cards from table to deck
+        if (deck.size() != 32) {
+            roundWinner.getTurn();
+        } else {
+            endOfHand();
+        }
     }
 
+    public boolean cardIsOnTable(Card card) {
+        return table.contains(card);
+    }
 
+    public void putCardOnTable(Card card, Player player) {
+        card.playedBy(player);
+        table.add(card);
+    }
+
+    public void endOfHand() {
+
+    }
 
 
 }

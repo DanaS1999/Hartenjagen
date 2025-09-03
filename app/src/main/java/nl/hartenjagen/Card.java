@@ -30,6 +30,10 @@ public class Card {
         return this.suit;
     }
 
+    public int getValue() {
+        return this.value;
+    }
+    
     public String determineName(Suit suit, int value) {
         String s = suit.toString().toLowerCase();
         String suitName = s.substring(0,1).toUpperCase() + s.substring(1);
@@ -57,6 +61,10 @@ public class Card {
         else if (suit == Suit.CLUBS && value == 11) {
             setPoints(2);
         }   
+    }
+
+    public void playedBy(Player player) {
+        this.playedBy = player;
     }
 }
 

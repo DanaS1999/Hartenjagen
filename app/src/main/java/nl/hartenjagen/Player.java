@@ -46,12 +46,16 @@ public class Player {
         return this.score;
     }
 
+    public void increaseScore(int pointsFromRound) {
+        this.score += pointsFromRound;
+    }
+
     public ArrayList<Card> getHand() {
         return this.hand;
     }
 
-    public boolean inHand(Card card) {
-        return this.getHand().contains(card);
+    public boolean hasCardInHand(Card card) {
+        return getHand().contains(card);
     }
 
     public boolean hasTurn() {
@@ -76,15 +80,18 @@ public class Player {
     }
 
     public void giveTurnToNeighbour() {
-        this.getNextPlayer().getTurn();
+        getNextPlayer().getTurn();
+    }
+
+    public void removeCardFromHand(Card card) {
+        getHand().remove(card);
     }
 
     public void playCard(Card card) {
         Result result = game.checkIfValid(card, this);
         if (result.success) {
-            // card is removed from hand
-            // card is added to table
-            // card playedBy
+            removeCardFromHand(card);
+            game.putCardOnTable(card, this);
             loseTurn();
             if (!game.roundCompleted()) {
                 giveTurnToNeighbour();   
