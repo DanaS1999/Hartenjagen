@@ -46,6 +46,10 @@ public class Player {
         return this.score;
     }
 
+    public void capScoreAt35() {
+        this.score = 35;
+    }
+
     public void increaseScore(int pointsFromRound) {
         this.score += pointsFromRound;
     }

@@ -1,20 +1,3 @@
-x when a card is thrown, the player is added to card.playedBy
-x if player has turn, they can play a card
-x player plays card from their hand
-x if pointsWerePlayed = false, can't play points
-x if player plays a card it is removed from their hand
-x if player plays a card it is added to the table
-x the player loses the turn
-x the next player gets the turn
-
-x if next player gets turn they can play a card
-x the card needs to fit the suit if possible
-x they can play points regardless of pointsWerePlayed 
-x the turn goes to the next player
-
-o if 4 cards have been played, (size of table = 4) the points go the the player that threw the highest card
-o the turn goes to the same player
-o the cards lose the playedBy
-o the cards are returned to the deck
-o if there are cards left in the hands, a new round starts
-
+o points go down once 35 points is reached
+o first player to reach 0 wins
+o game over

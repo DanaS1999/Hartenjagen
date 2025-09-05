@@ -9,6 +9,7 @@ public class Game {
     ArrayList<Card> table = new ArrayList<>();
     int playerIndex = 0;
     boolean pointsWerePlayed = false;
+    boolean countingUp = true;
 
     public static void main(String[] args) {
         Game game = new Game();
@@ -93,7 +94,6 @@ public class Game {
             return true;
         } else {
             Card firstCard = table.get(0);
-            Card.Suit firstSuit = card.getSuit();
             if (firstCard.getSuit() == card.getSuit()) {
                 return true;
             } else {
@@ -117,7 +117,7 @@ public class Game {
         }
         Player roundWinner = highestCardInRound.playedBy;
         roundWinner.increaseScore(totalPointsInRound);
-        //return cards from table to deck
+        returnTableToDeck();
         if (deck.size() != 32) {
             roundWinner.getTurn();
         } else {
@@ -135,8 +135,24 @@ public class Game {
     }
 
     public void endOfHand() {
-
+        boolean max35pointsReached = false;
+        for (Player p : players) {
+            if (p.getScore() >= 35) {
+                p.capScoreAt35();
+                max35pointsReached = true;
+            }
+        }
+        if (max35pointsReached) {
+            countingUp = false;
+        }
+        dealCards();
     }
-
+    
+    public void returnTableToDeck() {
+        for (Card c : table) {
+            table.remove(c);
+            deck.add(c);
+        }
+    }
 
 }
